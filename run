@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+test -f "$1" || ( echo "Specify .yml file as first argument" >&2 ; exit 1 )
+
+sudo add-apt-repository -y ppa:git-core/ppa
+sudo add-apt-repository -y ppa:ansible/ansible
+sudo add-apt-repository -y ppa:neovim-ppa/stable
+sudo apt-get -qq update
+sudo apt-get install -qqy ansible
+
+if [[ "$1" == "server.yml" ]]; then
+  ansible-galaxy install jdauphant.nginx
+  ansible-galaxy install jdauphant.ssl-certs
+fi
+
+sudo ansible-playbook $1 -i inventory

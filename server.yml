@@ -1,0 +1,52 @@
+---
+- include: playbook.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - apt: name={{item}}
+      with_items:
+        - fail2ban
+        - nginx
+        - php5-fpm
+        - ufw
+
+    # use the pre-configured port registry in /etc/ufw/applications.d
+    - ufw: state=enabled policy=reject rule=allow name="{{item}}"
+      with_items:
+        - mosh
+        - "Nginx HTTPS"
+        - "OpenSSH"
+
+    # disable root login via ssh
+    - lineinfile: line="PermitRootLogin no" regexp="^PermitRootLogin .*" dest=/etc/ssh/sshd_config
+      register: sshd_config_line
+    - service: name=ssh state=reloaded
+      when: sshd_config_line.changed
+
+# Setup nginx sites (SSL only, passwordmaker)
+- hosts: all
+  become: yes
+  roles:
+    - jdauphant.ssl-certs
+    - role: jdauphant.nginx
+      nginx_configs:
+        ssl:
+        - ssl_certificate_key {{ssl_certs_privkey_path}}
+        - ssl_certificate     {{ssl_certs_cert_path}}
+      nginx_sites:
+        default:
+          - listen 443 ssl
+          - server_name _
+          - root "/var/www/html"
+          - |
+            location ~ \.php$ {
+              add_header "Cache-Control" "max-age=0, no-cache, no-store, must-revalidate";
+              add_header "Pragma" "no-cache";
+              add_header "Expires" "-1";
+              include fastcgi_params;
+              fastcgi_pass unix:/var/run/php5-fpm.sock;
+              fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+            }
+  tasks:
+    - synchronize: src=passwordmaker/ dest=/var/www/html/

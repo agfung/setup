@@ -1,0 +1,30 @@
+[user]
+	name = Andrew Fung
+
+[push]
+	default = simple
+
+[core]
+	pager = less -x2
+	excludesfile = ~/.gitignore
+
+[diff]
+  compactionHeuristic = true
+  tool = vimdiff
+  guitool = bc3
+
+[difftool]
+  prompt = false
+
+[merge]
+  keepBackup = false
+  tool = bc3
+
+[alias]
+	co = checkout
+	ci = commit
+	cp = cherry-pick
+	br = branch
+	st = status
+	unstage = reset HEAD --
+	lo = log --oneline --decorate=auto

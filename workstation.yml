@@ -1,0 +1,134 @@
+---
+- hosts: all
+  tasks:
+    - apt: update_cache=yes cache_valid_time=3600
+
+    # shell environment
+    - apt: name={{item}}
+      with_items:
+        - autojump
+        - clusterssh
+        - guake
+        - moreutils  # for 'ts', 'sponge', 'parallel'
+        - mosh
+        - ncdu
+        - neovim
+        - pwgen
+        - qalc
+        - ranger
+        - realpath
+        - renameutils
+        - silversearcher-ag
+        - sshfs
+        - terminator
+        - tree
+        - tmux
+        - ttyrec
+        - wajig
+        - xsel  # for neovim system clipboard
+        - zsh
+        - zsh-antigen
+
+    # diagnostics
+    - apt: name={{item}}
+      with_items:
+        - atop
+        - bmon
+        - bonnie++
+        - glances
+        - htop
+        - iftop
+        - iotop
+        - mbuffer
+        - netcat
+        - nethogs
+        - nicstat
+        - nmap
+        - pydf
+        - slurm
+        - sysstat
+        - tcptraceroute
+        - traceroute
+        - wipe
+
+    # working with files
+    - apt: name={{item}}
+      with_items:
+        - aria2
+        - cryptsetup
+        - curl
+        - lbzip2
+        - lftp
+        - p7zip-full
+        - pigz
+        - unzip
+        - wget
+        - zip
+
+    # media
+    - apt: name={{item}}
+      with_items:
+        - imagemagick
+        - mplayer
+        - smplayer
+        - vlc
+
+    # coding
+    - apt: name={{item}}
+      with_items:
+        - cloc
+        - dos2unix
+        - git
+        - gitk
+        - ipython
+        - ipython3
+        - jq
+        - python-dev
+        - python-pip
+        - python3-dev
+        - python3-pip
+        - rlwrap
+        - tig
+        - weechat
+        - weechat-plugins
+        - xmlstarlet
+        - znc
+
+    # firewall
+    - ufw:
+        state: enabled
+    - ufw:
+        logging: off
+    - ufw:
+        rule: limit
+        port: ssh
+        proto: tcp
+    - ufw:
+        rule: allow
+        port: ssh
+
+    # services
+    - apt: name={{item}}
+      with_items:
+        - openssh-server
+
+    # latest version of everything
+    - name: "apt upgrade"
+      apt: upgrade=yes
+
+    # dot-files
+    - blockinfile:
+        block: "{{ lookup('file', 'dotfiles/' + item.0) }}"
+        dest: "{{ ansible_env.HOME + '/' + item.1 }}"
+        insertbefore: BOF
+        create: yes
+      with_together:
+        - "{{ ['_zshrc', '_inputrc', '_ssh_config', '_vimrc', '_gitconfig'] }}"
+        - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.vimrc', '.gitconfig'] }}"
+
+    # useful scripts
+    - file: name="{{ansible_env.HOME}}/bin/" state=directory
+    - get_url:
+        url: "https://raw.githubusercontent.com/dennishafemann/tmux-cssh/master/tmux-cssh"
+        dest: "{{ansible_env.HOME}}/bin/tmux-cssh"
+    - file: name="{{ansible_env.HOME}}/bin/tmux-cssh" mode="ugo=rx"

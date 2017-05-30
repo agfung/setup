@@ -57,6 +57,7 @@
         - aria2
         - cryptsetup
         - curl
+        - httpie
         - lbzip2
         - lftp
         - p7zip-full

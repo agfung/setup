@@ -59,10 +59,10 @@ key[PageDown]=${terminfo[knp]}
 
 bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
-bindkey -M vicmd "/" history-incremental-search-backward
-bindkey -M vicmd "?" history-incremental-search-forward
-bindkey -M viins '^r' history-incremental-search-backward
-bindkey -M vicmd '^r' history-incremental-search-backward
+bindkey -M vicmd "/" history-incremental-pattern-search-backward
+bindkey -M vicmd "?" history-incremental-pattern-search-forward
+bindkey -M viins '^r' history-incremental-pattern-search-backward
+bindkey -M vicmd '^r' history-incremental-pattern-search-backward
 bindkey "${key[Up]}" history-beginning-search-backward-end
 bindkey "${key[Down]}" history-beginning-search-forward-end
 

@@ -70,6 +70,8 @@
     - apt: name={{item}}
       with_items:
         - imagemagick
+        - exiftool
+        - mediainfo
         - mplayer
         - smplayer
         - vlc

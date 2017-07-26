@@ -120,6 +120,10 @@
       apt: upgrade=yes
 
     # dot-files
+    - file:
+        path: "{{ ansible_env.HOME + '/.ssh' }}"
+        state: directory
+        mode: 0700
     - blockinfile:
         block: "{{ lookup('file', 'dotfiles/' + item.0) }}"
         dest: "{{ ansible_env.HOME + '/' + item.1 }}"

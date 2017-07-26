@@ -10,18 +10,6 @@ export TZ='America/Los_Angeles'
 
 umask u+rwx,g+rx,o+rx
 
-alias 'cd..'='cd ..'
-alias 'dirs'='dirs -v'
-alias 'history'='history -i'
-alias l='ls -lFh --color=none'
-alias ls='ls -Fh --color=auto'
-alias rm='rm -i'
-alias cp='cp -i --reflink=auto'
-alias mv='mv -i'
-alias df='df -h'
-alias du='du -h'
-alias diff='diff -u'
-
 source /usr/share/autojump/autojump.sh
 source /usr/share/zsh-antigen/antigen.zsh
 
@@ -35,6 +23,18 @@ antigen bundle vi-mode
 antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
 
 antigen apply
+
+alias 'cd..'='cd ..'
+alias 'dirs'='dirs -v'
+alias 'history'='history -i'
+alias l='ls -lFh --color=none'
+alias ls='ls -Fh --color=auto'
+alias rm='rm -i'
+alias cp='cp -i --reflink=auto'
+alias mv='mv -i'
+alias df='df -h'
+alias du='du -h'
+alias diff='diff -u'
 
 # https://wiki.archlinux.org/index.php/Zsh#Key_Bindings
 typeset -A key

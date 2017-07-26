@@ -14,13 +14,17 @@ source /usr/share/autojump/autojump.sh
 source /usr/share/zsh-antigen/antigen.zsh
 
 antigen use oh-my-zsh
-antigen bundle git
-antigen bundle pip
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle vi-mode
 
-antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
+antigen bundles <<EOF
+git
+pip
+command-not-found
+zsh-users/zsh-syntax-highlighting
+vi-mode
+EOF
+
+#antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
+antigen theme dogenpunk
 
 antigen apply
 

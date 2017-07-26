@@ -73,6 +73,7 @@
         - exiftool
         - mediainfo
         - mplayer
+        - shutter
         - smplayer
         - vlc
 

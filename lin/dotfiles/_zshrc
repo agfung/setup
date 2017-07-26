@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 typeset -U path
 
 export EDITOR='vim'
@@ -11,11 +11,13 @@ export TZ='America/Los_Angeles'
 umask u+rwx,g+rx,o+rx
 
 source /usr/share/autojump/autojump.sh
-source /usr/share/zsh-antigen/antigen.zsh
+source $HOME/.local/bin/antigen.zsh
 
 antigen use oh-my-zsh
 
 antigen bundles <<EOF
+lukechilds/zsh-nvm
+nobeans/zsh-sdkman
 git
 pip
 command-not-found

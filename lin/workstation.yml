@@ -27,7 +27,6 @@
         - wajig
         - xsel  # for neovim system clipboard
         - zsh
-        - zsh-antigen
 
     # diagnostics
     - apt: name={{item}}
@@ -134,8 +133,12 @@
         - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.vimrc', '.gitconfig'] }}"
 
     # useful scripts
-    - file: name="{{ansible_env.HOME}}/bin/" state=directory
+    - file: name="{{ansible_env.HOME}}/.local/bin/" state=directory
     - get_url:
         url: "https://raw.githubusercontent.com/dennishafemann/tmux-cssh/master/tmux-cssh"
-        dest: "{{ansible_env.HOME}}/bin/tmux-cssh"
-    - file: name="{{ansible_env.HOME}}/bin/tmux-cssh" mode="ugo=rx"
+        dest: "{{ansible_env.HOME}}/.local/bin/tmux-cssh"
+    - file: name="{{ansible_env.HOME}}/.local/bin/tmux-cssh" mode="ugo=rx"
+    - get_url:
+        url: "https://git.io/antigen"
+        dest: "{{ansible_env.HOME}}/.local/bin/antigen.zsh"
+    - file: name="{{ansible_env.HOME}}/.local/bin/antigen.zsh" mode="ugo=rx"

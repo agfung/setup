@@ -18,6 +18,7 @@
         - ranger
         - realpath
         - renameutils
+        - redshift
         - silversearcher-ag
         - sshfs
         - terminator

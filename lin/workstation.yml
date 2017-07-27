@@ -6,9 +6,11 @@
     # shell environment
     - apt: name={{item}}
       with_items:
+        - asciinema
         - autojump
         - clusterssh
         - guake
+        - lolcat
         - moreutils  # for 'ts', 'sponge', 'parallel'
         - mosh
         - ncdu

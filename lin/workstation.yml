@@ -133,8 +133,8 @@
         insertbefore: BOF
         create: yes
       with_together:
-        - "{{ ['_zshrc', '_inputrc', '_ssh_config', '_vimrc', '_gitconfig'] }}"
-        - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.vimrc', '.gitconfig'] }}"
+        - "{{ ['_zshrc', '_inputrc', '_ssh_config', '_vimrc', '_gitconfig', '_tmux.conf'] }}"
+        - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.vimrc', '.gitconfig', '.tmux.conf'] }}"
 
     # useful scripts
     - file: name="{{ansible_env.HOME}}/.local/bin/" state=directory

@@ -23,6 +23,7 @@ pip
 command-not-found
 zsh-users/zsh-syntax-highlighting
 vi-mode
+docker
 EOF
 
 #antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship

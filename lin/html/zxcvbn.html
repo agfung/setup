@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>zxcvbn</title>
+
+    <script type="text/javascript" src="jquery.js">
+    </script>
+    <script type="text/javascript" src="mustache.js">
+    </script>
+    <script data-main="zxcvbn-main" src="require.js">
+    </script>
+  </head>
+  <body>
+    <style type="text/css">
+
+      body {
+        font-family: monospace;
+      }
+
+      .match-sequence table {
+        display: inline;
+        margin-right: 30px;
+      }
+
+      .match-sequence {
+        margin-bottom: 100px;
+      }
+
+      .match-sequence > table:nth-child(odd) {
+        background-color: #ccc;
+      }
+      .match-sequence > table:nth-child(even) {
+        background-color: #eee;
+      }
+
+      #examples-container {
+        margin-top: 200px;
+      }
+
+    </style>
+    <h1>input</h1>
+    <input id="search-bar" type="password" size="50" />
+    <div id="search-results">
+    </div>
+
+    <div id="examples-container">
+    <h1 id="examples">examples</h1>
+    <div id="results">
+    </div>
+  </body>
+</html>

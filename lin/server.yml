@@ -49,4 +49,4 @@
               fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
             }
   tasks:
-    - synchronize: src=passwordmaker/ dest=/var/www/html/
+    - synchronize: src=html/ dest=/var/www/html/

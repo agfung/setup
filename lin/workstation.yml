@@ -74,10 +74,8 @@
         - imagemagick
         - exiftool
         - mediainfo
-        - mplayer
+        - mpv
         - shutter
-        - smplayer
-        - vlc
 
     # coding
     - apt: name={{item}}

@@ -21,6 +21,7 @@
         - realpath
         - renameutils
         - redshift
+        - shellcheck
         - silversearcher-ag
         - sshfs
         - terminator

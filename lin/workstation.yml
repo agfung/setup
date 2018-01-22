@@ -11,10 +11,10 @@
         - clusterssh
         - guake
         - lolcat
-        - moreutils  # for 'ts', 'sponge', 'parallel'
         - mosh
         - ncdu
         - neovim
+        - parallel
         - pwgen
         - qalc
         - ranger

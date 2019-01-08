@@ -15,4 +15,6 @@ if [[ "$1" == "server.yml" ]]; then
   ansible-galaxy install jdauphant.ssl-certs
 fi
 
+ansible-galaxy install drew-kun.homebrew
+
 sudo ansible-playbook $1 -i inventory

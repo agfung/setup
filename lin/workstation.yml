@@ -17,6 +17,7 @@
         - ncdu
         - neovim
         - parallel
+        - powerline
         - pwgen
         - qalc
         - ranger
@@ -29,6 +30,7 @@
         - terminator
         - tree
         - tmux
+        - tmux-plugin-manager
         - ttyrec
         - wajig
         - xsel  # for neovim system clipboard

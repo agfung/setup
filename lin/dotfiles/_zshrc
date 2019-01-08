@@ -26,8 +26,12 @@ vi-mode
 greymd/docker-zsh-completion
 EOF
 
-#antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
-antigen theme dogenpunk
+#antigen theme robbyrussell
+
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs load)
+POWERLEVEL9K_COLOR_SCHEME='light'
+antigen theme bhilburn/powerlevel9k powerlevel9k
 
 antigen apply
 

@@ -1,39 +1,35 @@
 set nocompatible | filetype indent plugin on | syn on
 
-fun! SetupVAM()
-  let c = get(g:, 'vim_addon_manager', {})
-  let g:vim_addon_manager = c
-  let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
+set visualbell
+set lazyredraw
+set history=9999
+set undolevels=9999
+set nobackup
+set nowritebackup
+set noswapfile
 
-  " Force your ~/.vim/after directory to be last in &rtp always:
-  " let g:vim_addon_manager.rtp_list_hook = 'vam#ForceUsersAfterDirectoriesToBeLast'
-
-  " most used options you may want to use:
-  " let c.log_to_buf = 1
-  " let c.auto_install = 0
-  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
-  if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
-    execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '
-        \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
-  endif
-
-  " This provides the VAMActivate command, you could be passing plugin names, too
-  call vam#ActivateAddons([], {})
-endfun
-call SetupVAM()
-
-VAMActivate sensible powerline vim-lastplace unimpaired
+set expandtab
+set sw=2
+set ts=2
+set sts=2
 
 set hlsearch
-set nobackup
-set noswapfile
-set nowritebackup
 set nojoinspaces
-set visualbell
+set tw=200
+set nowrap
 
-set ts=2
-set sw=2
-set expandtab
-
-highlight RedundantSpaces term=standout ctermbg=red guibg=red
-match RedundantSpaces /\s\+$\| \+\ze\t/
+" Automatic installaion of vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !mkdir -p ~/.vim/autoload
+  silent !curl -fLo ~/.vim/autoload/plug.vim
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+call plug#begin('~/.vim/plugged')
+Plug 'farmergreg/vim-lastplace'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+call plug#end()

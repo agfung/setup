@@ -1,51 +1,24 @@
 ---
-- include: workstation.yml
-
 - hosts: all
   become: yes
-  tasks:
-    - apt:
-        pkg:
-          - fail2ban
-          - nginx
-          - php7.2-fpm
-          - ufw
-
-    - ufw:
-        state: enabled
-    - ufw:
-        logging: on
-    - ufw:
-        rule: limit
-        port: ssh
-        proto: tcp
-    - ufw:
-        rule: allow
-        port: ssh
-    - ufw:
-        rule: allow
-        port: 60000:60006
-        proto: udp
-    - ufw:
-        rule: allow
-        port: https
-
-    # disable root login via ssh
-    - lineinfile: line="PermitRootLogin no" regexp="^PermitRootLogin .*" dest=/etc/ssh/sshd_config
-      register: sshd_config_line
-    - service: name=ssh state=reloaded
-      when: sshd_config_line.changed
-
-# Setup nginx sites (SSL only, passwordmaker)
-- hosts: all
-  become: yes
+  vars:
+    domain_name: optimus.astradele.com
+    certbot_create_if_missing: yes
+    certbot_create_method: standalone
+    certbot_admin_email: agfung@gmail.com
+    certbot_certs:
+      - email: agfung@gmail.com
+        domains:
+          - "{{ domain_name }}"
+    certbot_create_standalone_stop_services:
+      - nginx
   roles:
-    - jdauphant.ssl-certs
+    - geerlingguy.certbot
     - role: jdauphant.nginx
       nginx_configs:
         ssl:
-        - ssl_certificate_key {{ssl_certs_privkey_path}}
-        - ssl_certificate     {{ssl_certs_cert_path}}
+        - ssl_certificate_key "/etc/letsencrypt/live/{{ domain_name }}/privkey.pem"
+        - ssl_certificate     "/etc/letsencrypt/live/{{ domain_name }}/fullchain.pem"
       nginx_sites:
         default:
           - listen 443 ssl
@@ -60,5 +33,43 @@
               fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
               fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
             }
+        redirect:
+          - listen 80
+          - server_name _
+          - return 301 https://$host$request_uri
+  pre_tasks:
+    - apt:
+        pkg:
+          - fail2ban
+          - certbot
+          - nginx
+          - php7.2-fpm
+          - python3-certbot-nginx
+          - ufw
+    - ufw:
+        state: enabled
+    - ufw:
+        logging: on
+    - ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop:
+        - ssh
+        - https
+        - http  # for certbot autorenew
+    - ufw:
+        rule: limit
+        port: ssh
+        proto: tcp
+    - ufw:
+        rule: allow
+        port: 60000:60006
+        proto: udp
+    # disable root login via ssh
+    - lineinfile: line="PermitRootLogin no" regexp="^PermitRootLogin .*" dest=/etc/ssh/sshd_config
+      register: sshd_config_line
+    - service: name=ssh state=reloaded
+      when: sshd_config_line.changed
   tasks:
     - synchronize: src=html/ dest=/var/www/html/

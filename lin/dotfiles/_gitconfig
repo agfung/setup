@@ -5,7 +5,7 @@
 	default = simple
 
 [core]
-	pager = less -x2
+	pager = less -FX -x2
 	excludesfile = ~/.gitignore
 
 [diff]
@@ -19,6 +19,13 @@
 [merge]
   keepBackup = false
   tool = bc3
+  renameLimit = 999999
+
+[difftool "bc3"]
+  trustExitCode = true
+
+[mergetool "bc3"]
+  trustExitCode = true
 
 [alias]
 	co = checkout

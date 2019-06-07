@@ -4,96 +4,96 @@
     - apt: update_cache=yes cache_valid_time=3600
 
     # shell environment
-    - apt: name={{item}}
-      with_items:
-        - asciinema
-        - autojump
-        - clusterssh
-        - mosh
-        - ncdu
-        - parallel
-        - pwgen
-        - qalc
-        - ranger
-        - renameutils
-        - sshfs
-        - tilix
-        - tree
-        - tmux
-        - tmux-plugin-manager
-        - ttyrec
-        - vim-gtk
-        - wajig
-        - zsh
+    - apt:
+        pkg:
+          - asciinema
+          - autojump
+          - clusterssh
+          - mosh
+          - ncdu
+          - parallel
+          - pwgen
+          - qalc
+          - ranger
+          - renameutils
+          - sshfs
+          - tilix
+          - tree
+          - tmux
+          - tmux-plugin-manager
+          - ttyrec
+          - vim-gtk
+          - wajig
+          - zsh
 
     # ripgrep
     - apt: deb=https://github.com/BurntSushi/ripgrep/releases/download/11.0.1/ripgrep_11.0.1_amd64.deb
 
     # diagnostics
-    - apt: name={{item}}
-      with_items:
-        - atop
-        - bmon
-        - bonnie++
-        - glances
-        - htop
-        - iftop
-        - iotop
-        - mbuffer
-        - netcat
-        - nethogs
-        - nicstat
-        - nmap
-        - pydf
-        - slurm
-        - sysstat
-        - tcptraceroute
-        - traceroute
-        - wipe
+    - apt:
+        pkg:
+          - atop
+          - bmon
+          - bonnie++
+          - glances
+          - htop
+          - iftop
+          - iotop
+          - mbuffer
+          - netcat
+          - nethogs
+          - nicstat
+          - nmap
+          - pydf
+          - slurm
+          - sysstat
+          - tcptraceroute
+          - traceroute
+          - wipe
 
     # working with files
-    - apt: name={{item}}
-      with_items:
-        - aria2
-        - cryptsetup
-        - curl
-        - httpie
-        - lbzip2
-        - lftp
-        - p7zip-full
-        - pigz
-        - unzip
-        - wget
-        - zip
+    - apt:
+        pkg:
+          - aria2
+          - cryptsetup
+          - curl
+          - httpie
+          - lbzip2
+          - lftp
+          - p7zip-full
+          - pigz
+          - unzip
+          - wget
+          - zip
 
     # media
-    - apt: name={{item}}
-      with_items:
-        - imagemagick
-        - exiftool
-        - mediainfo
-        - mpv
+    - apt:
+        pkg:
+          - imagemagick
+          - exiftool
+          - mediainfo
+          - mpv
 
     # coding
-    - apt: name={{item}}
-      with_items:
-        - cloc
-        - dos2unix
-        - git
-        - gitk
-        - ipython
-        - ipython3
-        - jq
-        - python-dev
-        - python-pip
-        - python3-dev
-        - python3-pip
-        - rlwrap
-        - tig
-        - weechat
-        - weechat-plugins
-        - xmlstarlet
-        - znc
+    - apt:
+        pkg:
+          - cloc
+          - dos2unix
+          - git
+          - gitk
+          - ipython
+          - ipython3
+          - jq
+          - python-dev
+          - python-pip
+          - python3-dev
+          - python3-pip
+          - rlwrap
+          - tig
+          - weechat
+          - weechat-plugins
+          - xmlstarlet
+          - znc
 
     # docker-ce
     - apt_key: url=https://download.docker.com/linux/ubuntu/gpg
@@ -118,9 +118,9 @@
         port: ssh
 
     # services
-    - apt: name={{item}}
-      with_items:
-        - openssh-server
+    - apt:
+        pkg:
+          - openssh-server
 
     # latest version of everything
     - name: "apt upgrade"

@@ -4,19 +4,19 @@
 - hosts: all
   become: yes
   tasks:
-    - apt: name={{item}}
-      with_items:
-        - fail2ban
-        - nginx
-        - php5-fpm
-        - ufw
+    - apt:
+        pkg:
+          - fail2ban
+          - nginx
+          - php5-fpm
+          - ufw
 
     # use the pre-configured port registry in /etc/ufw/applications.d
-    - ufw: state=enabled policy=reject rule=allow name="{{item}}"
-      with_items:
-        - mosh
-        - "Nginx HTTPS"
-        - "OpenSSH"
+    - ufw: state=enabled policy=reject rule=allow
+        pkg:
+          - mosh
+          - "Nginx HTTPS"
+          - "OpenSSH"
 
     # disable root login via ssh
     - lineinfile: line="PermitRootLogin no" regexp="^PermitRootLogin .*" dest=/etc/ssh/sshd_config

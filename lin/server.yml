@@ -11,12 +11,24 @@
           - php5-fpm
           - ufw
 
-    # use the pre-configured port registry in /etc/ufw/applications.d
-    - ufw: state=enabled policy=reject rule=allow
-        pkg:
-          - mosh
-          - "Nginx HTTPS"
-          - "OpenSSH"
+    - ufw:
+        state: enabled
+    - ufw:
+        logging: on
+    - ufw:
+        rule: limit
+        port: ssh
+        proto: tcp
+    - ufw:
+        rule: allow
+        port: ssh
+    - ufw:
+        rule: allow
+        port: 60000:60006
+        proto: udp
+    - ufw:
+        rule: allow
+        port: https
 
     # disable root login via ssh
     - lineinfile: line="PermitRootLogin no" regexp="^PermitRootLogin .*" dest=/etc/ssh/sshd_config

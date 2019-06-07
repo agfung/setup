@@ -133,14 +133,21 @@
         - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.vimrc', '.gitconfig', '.tmux.conf'] }}"
 
     # useful scripts
-    - file: name="{{ansible_env.HOME}}/.local/bin/" state=directory
+    - file:
+        path: "{{ansible_env.HOME}}/.local/bin/"
+        state: directory
     - name: tmux-cssh
       copy:
         src: tmux-cssh
         dest: "{{ansible_env.HOME}}/.local/bin/tmux-cssh"
         mode: u+rx,g+rx,o+rx
-    - file: name="{{ansible_env.HOME}}/.local/bin/tmux-cssh" mode="ugo=rx"
     - get_url:
         url: "https://git.io/antigen"
         dest: "{{ansible_env.HOME}}/.local/bin/antigen.zsh"
-    - file: name="{{ansible_env.HOME}}/.local/bin/antigen.zsh" mode="ugo=rx"
+
+    # fix ownership of paths and files, because ansible ran under sudo
+    - file:
+        name: "{{ansible_env.HOME}}"
+        owner: agfung
+        group: agfung
+        recurse: yes

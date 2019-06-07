@@ -129,8 +129,14 @@
         insertbefore: BOF
         create: yes
       with_together:
-        - "{{ ['_zshrc', '_inputrc', '_ssh_config', '_vimrc', '_gitconfig', '_tmux.conf'] }}"
-        - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.vimrc', '.gitconfig', '.tmux.conf'] }}"
+        - "{{ ['_zshrc', '_inputrc', '_ssh_config', '_gitconfig', '_tmux.conf'] }}"
+        - "{{ ['.zshrc', '.inputrc', '.ssh/config', '.gitconfig', '.tmux.conf'] }}"
+    - blockinfile:
+        block: "{{ lookup('file', 'dotfiles/_vimrc') }}"
+        dest: "{{ ansible_env.HOME + '/.vimrc' }}"
+        insertbefore: BOF
+        create: yes
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK"
 
     # useful scripts
     - file:

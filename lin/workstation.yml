@@ -134,9 +134,11 @@
 
     # useful scripts
     - file: name="{{ansible_env.HOME}}/.local/bin/" state=directory
-    - get_url:
-        url: "https://raw.githubusercontent.com/dennishafemann/tmux-cssh/master/tmux-cssh"
+    - name: tmux-cssh
+      copy:
+        src: tmux-cssh
         dest: "{{ansible_env.HOME}}/.local/bin/tmux-cssh"
+        mode: u+rx,g+rx,o+rx
     - file: name="{{ansible_env.HOME}}/.local/bin/tmux-cssh" mode="ugo=rx"
     - get_url:
         url: "https://git.io/antigen"

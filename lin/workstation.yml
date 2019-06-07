@@ -78,6 +78,7 @@
     - apt:
         pkg:
           - cloc
+          - docker.io
           - dos2unix
           - git
           - gitk
@@ -94,15 +95,6 @@
           - weechat-plugins
           - xmlstarlet
           - znc
-
-    # docker-ce
-    - apt_key: url=https://download.docker.com/linux/ubuntu/gpg
-    - apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
-    - apt:
-        name: ['apt-transport-https','ca-certificates','curl','software-properties-common','docker-ce']
-        state: present
-        update_cache: yes
 
     # firewall
     - ufw:

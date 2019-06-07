@@ -11,30 +11,26 @@
         - asciinema
         - autojump
         - clusterssh
-        - guake
-        - lolcat
         - mosh
         - ncdu
-        - neovim
         - parallel
-        - powerline
         - pwgen
         - qalc
         - ranger
         - realpath
         - renameutils
-        - redshift
-        - shellcheck
-        - silversearcher-ag
         - sshfs
-        - terminator
+        - tilix
         - tree
         - tmux
         - tmux-plugin-manager
         - ttyrec
+        - vim-gtk
         - wajig
-        - xsel  # for neovim system clipboard
         - zsh
+
+    # ripgrep
+    - apt: deb=https://github.com/BurntSushi/ripgrep/releases/download/11.0.1/ripgrep_11.0.1_amd64.deb
 
     # diagnostics
     - apt: name={{item}}
@@ -80,7 +76,6 @@
         - exiftool
         - mediainfo
         - mpv
-        - shutter
 
     # coding
     - apt: name={{item}}

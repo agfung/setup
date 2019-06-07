@@ -108,6 +108,10 @@
     - ufw:
         rule: allow
         port: ssh
+    - ufw:
+        rule: allow
+        port: 60000:60006
+        proto: udp
 
     # services
     - apt:

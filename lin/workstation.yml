@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  roles:
+    - dotstrap.fzf
   tasks:
     - apt: update_cache=yes cache_valid_time=3600
 

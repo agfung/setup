@@ -24,6 +24,7 @@ command-not-found
 zsh-users/zsh-syntax-highlighting
 vi-mode
 greymd/docker-zsh-completion
+piping/fzf-zsh
 EOF
 
 antigen theme geometry-zsh/geometry

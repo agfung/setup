@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# https://github.com/haugene/docker-transmission-openvpn/issues/279
+exec docker run --privileged  \
+  -v /home/agfung/Downloads/:/data \
+  -v /etc/localtime:/etc/localtime:ro \
+  -e "OPENVPN_PROVIDER=MULLVAD" \
+  -e "OPENVPN_USERNAME=<mullvad-account-number>" \
+  -e "OPENVPN_PASSWORD=m" \
+  -e "LOCAL_NETWORK=127.0.0.0/24" \
+  -e "TRANSMISSION_SPEED_LIMIT_UP_ENABLED=true" \
+  -e "TRANSMISSION_SPEED_LIMIT_UP=100" \
+  -e "TRANSMISSION_BLOCKLIST_ENABLED=true" \
+  -e "TRANSMISSION_BLOCKLIST_URL=http://john.bitsurge.net/public/biglist.p2p.gz" \
+  -e "PUID=1000" \
+  -e "PGID=1000" \
+  --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+  -p 127.0.0.1:9091:9091 \
+  haugene/transmission-openvpn

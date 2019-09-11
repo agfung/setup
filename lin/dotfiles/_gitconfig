@@ -26,12 +26,3 @@
 
 [mergetool "bc3"]
   trustExitCode = true
-
-[alias]
-	co = checkout
-	ci = commit
-	cp = cherry-pick
-	br = branch
-	st = status
-	unstage = reset HEAD --
-	lo = log --oneline --decorate=auto

@@ -1,7 +1,5 @@
 ---
 - hosts: all
-  roles:
-    - dotstrap.fzf
   tasks:
     - apt: update_cache=yes cache_valid_time=3600
 
@@ -29,7 +27,13 @@
           - zsh
 
     # ripgrep
-    - apt: deb=https://github.com/BurntSushi/ripgrep/releases/download/11.0.1/ripgrep_11.0.1_amd64.deb
+    - apt: deb=https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
+
+    # fzf
+    - git:
+        repo: 'https://github.com/junegunn/fzf.git'
+        dest: "{{ ansible_env.HOME }}/.fzf"
+    - shell: "{{ ansible_env.HOME }}/.fzf/install"
 
     # diagnostics
     - apt:

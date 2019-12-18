@@ -1,10 +1,14 @@
+# vim:ts=2:sw=2:et
 ---
 - hosts: all
   tasks:
-    - apt: update_cache=yes cache_valid_time=3600
+    - name: "apt - update"
+      become: true
+      apt: update_cache=yes cache_valid_time=3600
 
-    # shell environment
-    - apt:
+    - name: "apt - shell tools"
+      become: true
+      apt:
         pkg:
           - asciinema
           - autojump
@@ -26,19 +30,20 @@
           - wajig
           - zsh
 
-    # ripgrep
-    - apt: deb=https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
+    - name: "apt - ripgrep"
+      become: true
+      apt: deb=https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
 
-    # fzf
-    - git:
+    - name: "fzf"
+      git:
         repo: 'https://github.com/junegunn/fzf.git'
         dest: "{{ ansible_env.HOME }}/.fzf"
     - shell: "{{ ansible_env.HOME }}/.fzf/install"
 
-    # diagnostics
-    - apt:
+    - name: "apt - diagnostic tools"
+      become: true
+      apt:
         pkg:
-          - atop
           - bmon
           - bonnie++
           - glances
@@ -57,8 +62,9 @@
           - traceroute
           - wipe
 
-    # working with files
-    - apt:
+    - name: "apt - file tools"
+      become: true
+      apt:
         pkg:
           - aria2
           - cryptsetup
@@ -72,19 +78,22 @@
           - wget
           - zip
 
-    # media
-    - apt:
+    - name: "apt - media tools"
+      become: true
+      apt:
         pkg:
           - imagemagick
           - exiftool
           - mediainfo
           - mpv
 
-    # coding
-    - apt:
+    - name: "apt - development tools"
+      become: true
+      apt:
         pkg:
           - cloc
-          - docker.io
+          - docker-ce
+          - docker-compose
           - dos2unix
           - git
           - gitk
@@ -103,29 +112,33 @@
           - znc
 
     # firewall
-    - ufw:
-        state: enabled
-    - ufw:
-        logging: off
-    - ufw:
-        rule: limit
-        port: ssh
-        proto: tcp
-    - ufw:
-        rule: allow
-        port: ssh
-    - ufw:
-        rule: allow
-        port: 60000:60006
-        proto: udp
+    - name: "ufw"
+      become: true
+      block:
+      - ufw:
+          state: enabled
+      - ufw:
+          logging: off
+      - ufw:
+          rule: limit
+          port: ssh
+          proto: tcp
+      - ufw:
+          rule: allow
+          port: ssh
+      - ufw:
+          rule: allow
+          port: 60000:60006
+          proto: udp
 
-    # services
-    - apt:
+    - name: "apt - services"
+      become: true
+      apt:
         pkg:
           - openssh-server
 
-    # latest version of everything
     - name: "apt upgrade"
+      become: true
       apt: upgrade=yes
 
     # dot-files
@@ -157,13 +170,7 @@
         src: tmux-cssh
         dest: "{{ansible_env.HOME}}/.local/bin/tmux-cssh"
         mode: u+rx,g+rx,o+rx
-    - get_url:
+    - name: antigen
+      get_url:
         url: "https://git.io/antigen"
         dest: "{{ansible_env.HOME}}/.local/bin/antigen.zsh"
-
-    # fix ownership of paths and files, because ansible ran under sudo
-    - file:
-        name: "{{ansible_env.HOME}}"
-        owner: agfung
-        group: agfung
-        recurse: yes

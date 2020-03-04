@@ -16,6 +16,7 @@
           - mosh
           - ncdu
           - parallel
+          - progress
           - pwgen
           - qalc
           - ranger
